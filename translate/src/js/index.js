@@ -18,30 +18,22 @@ class Translator {
             throw new Error(err => console.log(response.statusText));
         })
         .then(data => {
-            const dictionary = data[0];
-            const entries = Object.entries(dictionary);
-            for (let word in dictionary) {
-                let wordList = [];
-                if (word === selection) {
-                    wordList.push(word);
-                    
-                    console.log(dictionary[word]);
+            let translationVariants = new Set();
+            data.find(word => {
+                if (Object.keys(word).includes(selection)) {
+                    translationVariants.add(word[selection].toLowerCase());
+                    let counter = 0;
+                    let setWrapper = document.createElement('div');
+                    translationVariants.forEach(function(elem) {
+                        counter++;
+                        const variant = document.createElement('p');
+                        variant.textContent = `${counter}) ${elem}`;
+                        setWrapper.append(variant);
+                    })
+                    this.resultWindow.textContent = `You selected: ${selection}.`;
+                    this.resultWindow.appendChild(setWrapper);
                 }
-            }
-                // if (selection === value[0]) {
-                //     if (this.firstValueArray.includes(value[0])) {
-                //         console.log('1', value[1]);
-                //     } else {
-                //         this.firstValueArray.push(value[0]);
-                //         console.log('',value[1]);
-                //         this.resultWindow.textContent = `You selected: ${selection}. \n Translation: ${value[1].toLowerCase()}`;
-                //         console.log(this.firstValueArray);
-                //     }
-
-                    
-            //     } 
-
-            // });
+            });
         })
         .catch(err => console.log(err));
       
