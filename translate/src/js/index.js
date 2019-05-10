@@ -24,6 +24,7 @@ class Translator {
                     translationVariants.add(word[selection].toLowerCase());
                     let counter = 0;
                     let setWrapper = document.createElement('div');
+                    setWrapper.textContent = "Translations: ";
                     translationVariants.forEach(function(elem) {
                         counter++;
                         const variant = document.createElement('p');
